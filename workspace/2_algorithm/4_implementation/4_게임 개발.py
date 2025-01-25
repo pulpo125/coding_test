@@ -24,13 +24,13 @@ n * m 공간이 있다.
 from src.utils import timer
 
 @timer
-def solution() -> int:
+def solution(n, m, a, b, d, map_array) -> int:
     # 입력
-    n, m = map(int, input().split())
-    a, b, d = map(int, input().split())
-    array = []
-    for i in range(n):
-        array.append(map(int, input().split()))
+    # n, m = map(int, input().split())
+    # a, b, d = map(int, input().split())
+    # map_array = []
+    # for i in range(n):
+    #     map_array.append(map(int, input().split()))
 
     # 가본 곳을 저장하는 히스토리 배열 생성
     history_array = [[0] * m for _ in range(n)]
@@ -39,14 +39,35 @@ def solution() -> int:
     # 북, 동, 남, 서
     xy = [(-1, 0), (0, -1), (1, 0), (0, 1)]
 
-    # 왼쪽으로 회전
+    cnt = 1 # 처음 있는 곳도 가본 곳이므로 1이다.
+    turn = 0
+    while True:
+        # 왼쪽으로 회전
+        d -= 1
+        if d == -1:
+            d = 3
+        turn += 1
 
-    # 안가본 칸이면 한 칸 이동
+        # 안가본 칸이면서 육지면 한 칸 이동
+        na, nb = a + xy[d][0], b + xy[d][1]
+        if history_array[na][nb] == 0 and map_array[na][nb] == 0:
+            a, b = na, nb
+            cnt += 1
+            turn = 0 # turn init
+            continue
+        else:
+            # 가본 칸이면서 바다인 경우 회전한 방향 유지
 
-    # 가본 칸이면 continue
-        # 만약 모든 방향이 가본 칸이거나 바다인 경우
-            # 방향 유지하고 한 칸 뒤로 가고 continue
-            # 뒤가 바다라면 종료
+            # 모든 방향 가본 칸인 경우
+            if turn == 4:
+                # 한 칸 뒤가 육지면 뒤로 가기
+                na, nb = a - xy[d], b - xy[d]
+                if map_array[na][nb] == 0:
+                    a, b = na, nb
+                else:
+                    # 한 칸 뒤가 바다라면 종료
+                    break
+        print(cnt)
     
     return cnt
 
@@ -54,5 +75,14 @@ def solution() -> int:
 
 
 if __name__ == "__main__":
-    result = solution()
+    # n, m = map(int, input().split())
+    # a, b, d = map(int, input().split())
+    # map_array = []
+    # for i in range(n):
+    #     map_array.append(map(int, input().split()))
+    n, m = 4, 4
+    a, b, d = 1, 1, 0
+    map_array = [[1, 1, 1, 1], [1, 0, 0, 1], [1, 1, 0, 1], [1, 1, 1, 1]]
+
+    result = solution(n, m, a, b, d, map_array)
     print(result)
