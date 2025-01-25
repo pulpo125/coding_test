@@ -6,7 +6,7 @@
 from src.utils import timer
 
 @timer
-def answer(n, k):
+def solution(n, k):
     cnt = 0
     while n != 1:
         if n % k == 0:
@@ -22,6 +22,6 @@ if __name__ == "__main__":
     # print(f"n, k: {n, k}")
 
     # 실행
-    # result = answer(n, k)
-    result = answer(25, 5)
+    # result = solution(n, k)
+    result = solution(25, 5)
     print(result)

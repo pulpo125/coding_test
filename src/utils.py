@@ -28,7 +28,7 @@ def timer(func):
         start = time.time()
         result = func(*args, **kwargs)
         end = time.time()
-        logger.info(f"Execution time of {func.__name__}(): {end - start:.4f} seconds")
+        logger.info(f"Execution time of {func.__name__}(): {end - start:.8f} seconds")
         return result
 
     return wrapper
