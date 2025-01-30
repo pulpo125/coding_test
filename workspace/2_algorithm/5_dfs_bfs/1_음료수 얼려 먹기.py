@@ -4,7 +4,7 @@
 
 n * m 얼음 틀이 있다.
 0은 구멍, 1은 칸막이 부분이다.
-구멍끼리 붙어있는경우에는 서로 붙어있는 것이다.
+구멍끼리 붙어있는 경우에는 서로 붙어있는 것이다.
 총 아이스크림의 개수는?
 
 입력)
@@ -28,45 +28,61 @@ n * m 얼음 틀이 있다.
 11111111110011
 11100011111111
 11100011111111
+
+아이디어)
+1. 0 이면 상하좌우에 0이 있는지 체크
+2. 상하좌우 중 0이 있으면 그 위치에서 또 상하좌우에 0이 있는지 체크
+- 0 을 찾으면 1로 바꾸고 상하좌우에 0이 있는지 다 체크해서 1로 바꿔버리고 결국 카운트는 1만 플러스 함.
+
+코멘트)
+- 상하좌우 체크하는 로직과 dfs 가 필요하다는 것을 떠올렸으나 카운트 하는 시점(True, False)이 헷갈려서 결국 답지 확인 후 해답을 찾음.
 """
 from src.utils import timer
-from collections import deque
+
+def dfs(x, y):
+    print(graph)
+    if x <= -1 or x >= n or y <= -1 or y >= m:
+        return False
+    if graph[x][y] == 0:
+        graph[x][y] = 1
+        dfs(x+1, y) # 상
+        dfs(x-1, y) # 하
+        dfs(x, y-1) # 좌
+        dfs(x, y+1) # 우
+        return True
+    return False
 
 @timer
-def solution() -> int:
-    n, m = map(int, input().split())
+def solution(n, m, graph) -> int:
+    # n, m = map(int, input().split())
+
+    # graph = []
+    # for _ in range(n):
+        # graph.append(input().split())
+
+    cnt = 0
+    for i in range(n):
+        for j in range(m):
+            if dfs(i, j) == True:
+                print(i, j)
+                cnt += 1
     
-    # 인접 행렬 만들기
-    graph = []
-    for _ in range(n):
-        graph.append(input().split())
-
-    # visited 만들기
-    visited = [False] * n
-
-    # bfs 
-    def bfs(graph, start, visited):
-        queue = deque([start])
-        visited[start] = True
-
-        while queue:
-            v = queue.popleft()
-            print(v, end = " ")
-            for i in graph[v]:
-                if not visited[i]:
-                    queue.append(i)
-                    visited[i] = True
-
-    # 1.(1,1) 부터 시작해서 인접한 거 찾아서 check(True = 1)
-    # 2. 찾는게 끝나면 +1
-    # 3. 그 다음 0을 찾아서 1, 2번 수행
-
-
-
-
-
-
+    return cnt
 
 
 if __name__ == "__main__":
-    n, m = map(int, input().split())
+    # n, m = map(int, input().split())
+    # n, m = 4, 5
+    # graph = [
+    #     [0, 0, 1, 1, 0],
+    #     [0, 0, 0, 1, 1],
+    #     [1, 1, 1, 1, 1],
+    #     [0, 0, 0, 0, 0],
+    # ]
+    n, m = 3, 3
+    graph = [
+        [0, 0, 1],
+        [0, 1, 0],
+        [1, 0, 1],
+    ]
+    print(solution(n, m, graph))
