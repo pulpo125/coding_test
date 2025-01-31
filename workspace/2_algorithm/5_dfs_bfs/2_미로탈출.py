@@ -18,10 +18,34 @@ from src.utils import timer
 from collections import deque
 
 def bfs(x, y):
-    queue = deque([)
+    queue = deque()
     queue.append((x, y))
+    
+    # 상하좌우
+    directions = [(1, 0), (-1, 0), (0, -1), (0, 1)]
+
     while queue:
-        # ...
+        # 큐에서 하나의 좌표를 뽑는다
+        x, y = queue.popleft()
+        
+        for i in range(4): # 모든 방향 확인
+            nx = x + directions[i][0]
+            ny = y + directions[i][1]
+            
+            # 미로를 벗어나는 지 확인
+            if nx <= -1 or nx >= n or ny <= -1 or ny >= m:
+                continue
+            
+            # 0 인지 확인
+            if graph[nx][ny] == 0:
+                continue
+
+            # 1인 경우
+            if graph[nx][ny] == 1:
+                graph[nx][ny] = graph[x][y] + 1
+                queue.append((nx, ny))
+
+    return graph[n-1][m-1]
 
 
 @timer
@@ -32,6 +56,7 @@ def solution(n, m, graph) -> int:
     # for _ in range(n):
         # graph.append(input().split())
 
+    result = bfs(0, 0)
     
     return result
 
@@ -50,3 +75,4 @@ if __name__ == "__main__":
         [0, 1, 1],
     ]
     result = solution(n, m, graph)
+    print(f"정답: {result}")
