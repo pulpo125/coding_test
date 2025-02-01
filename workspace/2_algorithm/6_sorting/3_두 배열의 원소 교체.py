@@ -26,7 +26,10 @@ def solution(n: int, k: int, a: list, b: list) -> None:
 
     # 바꿔치기
     for i in range(k):
-        a[i], b[i] = b[i], a[i] 
+        if a[i] < b[i]:
+            a[i], b[i] = b[i], a[i]
+        else:
+            break 
     
     print(a)
 
