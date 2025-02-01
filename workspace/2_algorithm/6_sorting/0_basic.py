@@ -14,6 +14,7 @@ def selection_sort(array: list) -> list:
         array[min_idx], array[i] = array[i], array[min_idx]
     return array
 
+
 """
 2. 삽입 정렬
 - 삽입 정렬은 두 번째 원소(인덱스 1) 부터 왼쪽은 정렬되었다는 가정하에 왼쪽 리스트에 올바른 위치에 삽입을 해서 점차 정렬해나가는 정렬 방법이다.
@@ -29,6 +30,7 @@ def insertion_sort(array: list) -> list:
             else:
                 break
     return array
+
 
 """
 3. 퀵 정렬
@@ -94,6 +96,30 @@ def quick_sort(array: list) -> list:
     return light_quick_sort(array)
 
 
+"""
+4. 계수 정렬
+- 계수 정렬은 리스트의 모든 원소들을 카운트 할 수 있는 리스트를 정의해놓고, 카운트 리스트에 정보를 읽어 정렬하는 방법이다.
+- 먼저, 최댓값 + 1 크기의 리스트를 0으로 초기화해놓고, 리스트 인덱스에 해당하는 값이 있을때 카운트를 센다.
+- 카운트 리스트를 순회하며 각 정보를 읽는다.
+- 시간복잡도는 O(N+K) 이다. 하지만, 공간복잡도의 문제가 있기 때문에 1,000,000 개 이하일때만 사용할 수 있다.
+"""
+
+def count_sort(array):
+
+    # 카운트 리스트 초기화
+    count_list = [0] * (max(array) + 1)
+
+    # 카운트
+    for i in range(len(count_list)):
+        count_list[i] = array.count(i)
+    
+    # 카운트 리스트 읽기
+    result = []
+    for i, k in enumerate(count_list):
+        result += [i] * k
+
+    return result
+    
 
 if __name__ == "__main__":
     array = [7, 5, 9, 0, 3, 1, 6, 2, 4, 8]
@@ -105,4 +131,8 @@ if __name__ == "__main__":
 
     quick_sorted_array = quick_sort(array)
     print(f"퀵 정렬 결과: {quick_sorted_array}")
+
+    array_2 = [7, 5, 9, 0, 3, 1, 6, 2, 9, 1, 4, 8, 0, 5, 2]
+    count_sorted_array = count_sort(array_2)
+    print(f"계수 정렬 결과: {count_sorted_array}")
 
