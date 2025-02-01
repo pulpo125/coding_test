@@ -38,7 +38,7 @@ def insertion_sort(array: list) -> list:
 - 시간 복잡도는 O(nlogn) 이다.
 """
 
-def sorted_quick(array: list, start: int, end: int) -> list:
+def tranditional_quick_sort(array: list, start: int, end: int) -> list:
 
     # 원소가 한 개인 경우 종료
     if start >= end:
@@ -67,12 +67,12 @@ def sorted_quick(array: list, start: int, end: int) -> list:
             array[left], array[right] = array[right], array[left]
         
         # 재귀로 윈쪽, 오른쪽 리스트 다시 퀵 정렬 시행
-        sorted_quick(array, start, right-1)
-        sorted_quick(array, right+1, end)
+        tranditional_quick_sort(array, start, right-1)
+        tranditional_quick_sort(array, right+1, end)
     
     return array
 
-def light_sorted_quick(array: list) -> list:
+def light_quick_sort(array: list) -> list:
 
     # 만약 리스트 원소가 한개면 종료
     if len(array) <= 1:
@@ -86,12 +86,12 @@ def light_sorted_quick(array: list) -> list:
     right_list = [i for i in processing_list if pivot < i]
 
     # 왼쪽 오른쪽 리스트에 대해서도 퀵 정렬 수행
-    return light_sorted_quick(left_list) + [pivot] + light_sorted_quick(right_list)
-    
+    return light_quick_sort(left_list) + [pivot] + light_quick_sort(right_list)
+
 
 def quick_sort(array: list) -> list:
-    # return sorted_quick(array, 0, len(array)-1)
-    return light_sorted_quick(array)
+    # return tranditional_quick_sort(array, 0, len(array)-1)
+    return light_quick_sort(array)
 
 
 
