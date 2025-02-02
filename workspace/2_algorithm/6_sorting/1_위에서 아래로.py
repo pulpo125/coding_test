@@ -12,6 +12,7 @@
 - 정렬 결과를 공백으로 구분하여 출력
 """
 
+
 def solution(n: int, array: list) -> None:
     # 입력
     # n = int(input())
@@ -22,10 +23,12 @@ def solution(n: int, array: list) -> None:
     array.sort(reverse=True)
 
     for i in array:
-        print(i, end=" ")    
+        print(i, end=" ")
 
 
 if __name__ == "__main__":
     n = 3
     array = [15, 27, 12]
     solution(n, array)
+
+    # print(*sorted(array, reverse=True), sep=" ")  # 위의 함수와 동일한 결과를 출력한다.
