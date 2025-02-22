@@ -23,4 +23,5 @@
     "PYTHONPATH": "${workspaceFolder}"
   },
   "files.eol": "\n",
+  // "github.copilot.editor.enableAutoCompletions": false
 }
